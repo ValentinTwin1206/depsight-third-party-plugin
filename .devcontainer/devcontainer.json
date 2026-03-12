@@ -1,0 +1,7 @@
+{
+  "name": "deply-third-party-plugin",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "uv sync --all-extras"
+}
