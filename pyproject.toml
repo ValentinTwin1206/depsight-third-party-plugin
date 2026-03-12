@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/myplugin", "src/deply"]
+packages = ["src/myplugin"]
 
 [project]
 name = "deply-third-party-plugin"
@@ -11,7 +11,3 @@ version = "0.1.0"
 description = "A third-party plugin template for Deply"
 requires-python = ">=3.10"
 dependencies = []
-
-[project.entry-points."deply.plugins"]
-uv = "deply.core.plugins.uv.uv:UVPlugin"
-vsce = "deply.core.plugins.vsce.vsce:VSCEPlugin"
