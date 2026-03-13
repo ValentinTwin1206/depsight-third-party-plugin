@@ -1,0 +1,34 @@
+name: Manual Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      uv_version:
+        description: "uv version for the Docker build"
+        required: false
+        default: "0.10.9"
+        type: string
+      depsight_version:
+        description: "Depsight wheel version to install in the DevContainer"
+        required: false
+        default: "1.0.0"
+        type: string
+      push_image:
+        description: "Push the container image to Docker Hub"
+        required: false
+        default: false
+        type: boolean
+      plugin_version:
+        description: "Version to verify against pyproject.toml (e.g. 1.2.3)"
+        required: true
+        type: string
+
+jobs:
+  ci:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      uv_version: ${{ inputs.uv_version }}
+      depsight_version: ${{ inputs.depsight_version }}
+      push_image: ${{ inputs.push_image }}
+      plugin_version: ${{ inputs.plugin_version }}

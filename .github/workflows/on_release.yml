@@ -1,0 +1,15 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  ci:
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      release_tag: ${{ github.event.release.tag_name }}
+      push_image: true
+      uv_version: "0.10.9"
+      depsight_version: "1.0.0"
