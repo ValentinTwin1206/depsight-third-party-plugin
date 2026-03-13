@@ -26,7 +26,7 @@ wheels = [
 [[package]]
 name = "depsight"
 version = "0.1.0"
-source = { registry = "../../opt/depsight-wheels" }
+source = { registry = "wheels" }
 dependencies = [
     { name = "click" },
     { name = "rich" },

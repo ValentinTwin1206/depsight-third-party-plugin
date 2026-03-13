@@ -18,7 +18,7 @@ dependencies = [
 myplugin = "myplugin.myplugin:MyPlugin" # TODO: REPLACE WITH "npm.npm:NPMPlugin"
 
 [tool.uv]
-find-links = ["/opt/depsight-wheels"]
+find-links = ["wheels"]
 
 [dependency-groups]
 dev = [

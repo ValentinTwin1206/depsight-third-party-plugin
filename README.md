@@ -63,9 +63,38 @@ Coming soon...
   pytest tests/ -v
   ```
 
-### Build With GitHub
+### Build And Run Container
 
-#### Workflow Dispatch
+#### Build
+
+- Open a terminal inside the DevContainer and run following command:
+
+```bash
+docker build \
+  --build-arg UV_VERSION=0.10.9 \
+  --build-arg DEPSIGHT_VERSION=0.1.0 \
+  -t depsight-plugin:latest \
+  .
+```
+
+#### Run
+
+- Open a terminal inside the DevContainer and run following command:
+
+```bash
+docker run --rm -it \
+  -v "$PWD":/project \
+  depsight-plugin:latest myplugin scan --project-dir /project
+```
+
+- `-v "$PWD":/project` — mounts your current directory into `/project` inside the container
+- `--project-dir /project` — tells depsight to scan the mounted directory
+- Any arguments after the image name are forwarded to the `depsight` entrypoint
+
+
+## Release
+
+#### Pre-release (via Workflow Dispatch)
 
 - Navigate to your repository on GitHub and click the **Actions** tab
 - Select the **Manual Dispatch** workflow from the left sidebar
@@ -74,7 +103,7 @@ Coming soon...
 - Optionally set `uv_version` (defaults to `0.10.9`), `depsight_version` (defaults to `1.0.0`), or check **Push the container image to Docker Hub**
 - Click **Run workflow**
 
-#### Release
+#### Release (via GitHub Release)
 
 - Bump the `version` field in `pyproject.toml` to the desired version (e.g. `1.2.3`)
 - Commit and push the change to `main`
