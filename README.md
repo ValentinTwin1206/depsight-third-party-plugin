@@ -21,8 +21,6 @@ uv add <path/to/depsight-*.whl> <path/to/depsight_third_party_plugin-*.whl>
 pip install <path/to/depsight-*.whl> <path/to/depsight_third_party_plugin-*.whl>
 ```
 
-Once installed, `depsight` will automatically discover the plugin via its entry point — no additional configuration required.
-
 ### Getting Started
 
 Coming soon...
