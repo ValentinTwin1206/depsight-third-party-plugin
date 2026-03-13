@@ -65,8 +65,6 @@ Coming soon...
 
 ### Build And Run Container
 
-#### Build
-
 - Open a terminal inside the DevContainer and run following command:
 
   ```bash
@@ -76,8 +74,6 @@ Coming soon...
     -t depsight-plugin:latest \
     .
   ```
-
-#### Run
 
 - Open a terminal inside the DevContainer and run following command:
 
@@ -90,7 +86,6 @@ Coming soon...
   - `-v "$PWD":/project` — mounts your current directory into `/project` inside the container
   - `--project-dir /project` — tells depsight to scan the mounted directory
   - Any arguments after the image name are forwarded to the `depsight` entrypoint
-
 
 ## Release
 
