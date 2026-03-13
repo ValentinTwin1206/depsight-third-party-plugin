@@ -6,20 +6,25 @@ build-backend = "hatchling.build"
 packages = ["src/myplugin"] # TODO: REPLACE WITH "src/npm"
 
 [project]
-name = "deply-third-party-plugin" # TODO: RENAME TO "deply-npm-plugin"
+name = "depsight-third-party-plugin" # TODO: RENAME TO "depsight-npm-plugin"
 version = "0.1.0"
-description = "A third-party plugin template for Deply"
-requires-python = ">=3.10"
+description = "A third-party plugin template for depsight"
+requires-python = ">=3.12"
 dependencies = [
-    "deply",
+    "depsight",
 ]
 
-[project.entry-points."deply.plugins"]
+[project.entry-points."depsight.plugins"]
 myplugin = "myplugin.myplugin:MyPlugin" # TODO: REPLACE WITH "npm.npm:NPMPlugin"
+
+[tool.uv]
+find-links = ["/opt/depsight-wheels"]
 
 [dependency-groups]
 dev = [
     "pytest>=8.0",
+    "ruff>=0.9",
+    "mypy>=1.0",
 ]
 
 [tool.pytest.ini_options]

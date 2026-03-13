@@ -3,12 +3,12 @@ from __future__ import annotations
 from pathlib import Path
 
 # third-party imports
-from deply.core.plugins.base import BasePlugin
-from deply.core.plugins.dependency import Dependency
+from depsight.core.plugins.base import BasePlugin
+from depsight.core.plugins.dependency import Dependency
 
 # TODO: RENAME "MyPlugin" TO "NpmPlugin"
 class MyPlugin(BasePlugin):
-    """Example third-party plugin for deply."""
+    """Example third-party plugin for depsight."""
 
     def __init__(self) -> None:
         self.dependencies: list[Dependency] = []

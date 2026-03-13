@@ -1,8 +1,16 @@
 {
-    "name": "my-deply-third-party-plugin",
+    "name": "my-desight-third-party-plugin",
     "build": {
         "context": "..",
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+        "args": {
+            "DEPSIGHT_VERSION": "${localEnv:DEPSIGHT_VERSION:0.1.0}",
+            "PYTHON_VERSION": "${localEnv:PYTHON_VERSION:3.12}",
+            "UV_VERSION": "${localEnv:UV_VERSION:0.10.9}"
+        }
+    },
+    "containerEnv": {
+        "DEPSIGHT_ENV": "development"
     },
     "customizations": {
         "vscode": {
@@ -21,9 +29,6 @@
                 "Gruntfuggly.todo-tree"
             ]
         }
-    },
-    "containerEnv": {
-        "APP_NAME": "MY_DEPLY_PLUGIN"
     },
     "postCreateCommand": "uv sync --all-groups",
     "remoteUser": "vscode"
