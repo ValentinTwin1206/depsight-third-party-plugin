@@ -67,14 +67,9 @@ Coming soon...
 
 - Open a terminal inside the DevContainer and run following command:
 
-```bash
-docker build \
-  --build-arg DEPSIGHT_VERSION=0.1.0 \
-  -t depsight-plugin:latest \
-  .
-```
-
-#### Run
+  ```bash
+  docker build --build-arg DEPSIGHT_VERSION=0.1.0 -t depsight-plugin:latest .
+  ```
 
 - Open a terminal inside the DevContainer and run following command:
 
