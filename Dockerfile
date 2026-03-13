@@ -5,8 +5,7 @@ ARG PYTHON_VERSION=3.12
 FROM dhi.io/python:${PYTHON_VERSION}-dev AS builder
 
 # Install UV from the hardened uv image
-ARG UV_VERSION=0.10.9
-COPY --from=dhi.io/uv:${UV_VERSION} /usr/local/bin/uv \
+COPY --from=dhi.io/uv:0.10.9 /usr/local/bin/uv \
     /usr/local/bin/uvx /usr/local/bin/
 
 WORKDIR /depsight

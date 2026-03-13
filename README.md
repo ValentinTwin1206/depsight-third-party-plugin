@@ -71,7 +71,6 @@ Coming soon...
 
 ```bash
 docker build \
-  --build-arg UV_VERSION=0.10.9 \
   --build-arg DEPSIGHT_VERSION=0.1.0 \
   -t depsight-plugin:latest \
   .

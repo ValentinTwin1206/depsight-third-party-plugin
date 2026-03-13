@@ -11,7 +11,8 @@ RUN curl -LsSf https://astral.sh/uv/${UV_VERSION}/install.sh | UV_INSTALL_DIR=/u
 ARG DEPSIGHT_VERSION
 ARG WHL_PKG=depsight-${DEPSIGHT_VERSION}-py3-none-any.whl
 ADD https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/download/${DEPSIGHT_VERSION}/${WHL_PKG} /opt/depsight-wheels/
-    
+RUN chmod -R a+r /opt/depsight-wheels/
+
 # Environment variables
 ENV DEPSIGHT_ENV=development
 ENV PYTHONUNBUFFERED=1
