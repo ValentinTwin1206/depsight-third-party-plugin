@@ -65,8 +65,6 @@ Coming soon...
 
 ### Build And Run Container
 
-#### Build
-
 - Open a terminal inside the DevContainer and run following command:
 
 ```bash
@@ -80,16 +78,15 @@ docker build \
 
 - Open a terminal inside the DevContainer and run following command:
 
-```bash
-docker run --rm -it \
-  -v "$PWD":/project \
-  depsight-plugin:latest myplugin scan --project-dir /project
-```
+  ```bash
+  docker run --rm -it \
+    -v "$PWD":/project \
+    depsight-plugin:latest myplugin scan --project-dir /project
+  ```
 
-- `-v "$PWD":/project` — mounts your current directory into `/project` inside the container
-- `--project-dir /project` — tells depsight to scan the mounted directory
-- Any arguments after the image name are forwarded to the `depsight` entrypoint
-
+  - `-v "$PWD":/project` — mounts your current directory into `/project` inside the container
+  - `--project-dir /project` — tells depsight to scan the mounted directory
+  - Any arguments after the image name are forwarded to the `depsight` entrypoint
 
 ## Release
 
