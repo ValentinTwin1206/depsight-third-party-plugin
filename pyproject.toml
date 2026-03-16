@@ -30,3 +30,12 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+
+[tool.mypy]
+python_version = "3.12"
+disable_error_code = ["import-untyped"]
+
+[[tool.mypy.overrides]]
+module = ["depsight", "depsight.*", "depsight.core.*", "depsight.core.plugins.*"]
+ignore_missing_imports = true
+follow_imports = "skip"

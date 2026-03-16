@@ -1,29 +1,10 @@
 # Depsight Third-Party Plugin
 
-## Usage
+## About
 
-### Installation
+This repository is a **template** for building third-party plugins for [Depsight](https://github.com/ValentinTwin1206/depsight-dependency-manager), a Python-based dependency management CLI. It provides all the scaffolding needed to develop, test, package, and ship a plugin as a Python wheel — without having to set up the toolchain from scratch.
 
-#### Download the Python Wheels
-
-- Download the latest `depsight` `.whl` from the [depsight-dependency-manager releases](https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/latest) page.
-- Download the latest plugin `.whl` from this repository's [GitHub Releases](../../releases/latest) page.
-
-#### With uv
-
-```bash
-uv add <path/to/depsight-*.whl> <path/to/depsight_third_party_plugin-*.whl>
-```
-
-#### With pip
-
-```bash
-pip install <path/to/depsight-*.whl> <path/to/depsight_third_party_plugin-*.whl>
-```
-
-### Getting Started
-
-Coming soon...
+The project is designed as a **hands-on DevOps learning exercise**. Rather than providing a fully working pipeline out of the box, it intentionally leaves key steps as guided TODO items, challenging you to wire up the CI/CD workflow yourself. Along the way you will practice common DevOps patterns found in real Python projects: containerised development environments with Dev Containers, linting and type checking with Ruff and Mypy, automated testing with pytest, wheel packaging with uv, and multi-job GitHub Actions pipelines that build, publish, and release artefacts.
 
 ## Development
 
@@ -61,6 +42,20 @@ Coming soon...
 
   ```bash
   pytest tests/ -v
+  ```
+
+### Lint & Type Check
+
+- Run the Ruff linter:
+
+  ```bash
+  ruff check src/ tests/
+  ```
+
+- Run the Mypy type checker:
+
+  ```bash
+  mypy src/
   ```
 
 ### Build And Run Container
