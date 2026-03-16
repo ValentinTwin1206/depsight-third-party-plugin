@@ -1,5 +1,5 @@
 {
-    "name": "my-desight-third-party-plugin",
+    "name": "my-third-party-plugin",
     "build": {
         "context": "..",
         "dockerfile": "Dockerfile",
@@ -30,7 +30,7 @@
             ]
         }
     },
-    "postCreateCommand": "mkdir -p wheels && cp /opt/depsight-wheels/*.whl wheels/ && uv sync --all-groups",
+    "postCreateCommand": "bash .devcontainer/initDevContainer.sh",
     "features": {
         "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
             "moby": false
