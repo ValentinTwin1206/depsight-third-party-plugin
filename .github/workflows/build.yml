@@ -65,6 +65,19 @@ jobs:
 
           echo "::endgroup::"
 
+      - name: Check depsight release availability
+        env:
+          DEPSIGHT_VERSION: ${{ inputs.depsight_version }}
+        run: |
+          set -euo pipefail
+          URL="https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/download/${DEPSIGHT_VERSION}/depsight-${DEPSIGHT_VERSION}-py3-none-any.whl"
+          echo "Checking availability of depsight wheel at: $URL"
+          if ! curl --silent --head --fail "$URL" > /dev/null; then
+            echo "::error::depsight release '${DEPSIGHT_VERSION}' is not available at $URL"
+            exit 1
+          fi
+          echo "depsight '${DEPSIGHT_VERSION}' is available."
+
       - name: Lint, test & build wheel
         uses: devcontainers/ci@v0.3
         with:
@@ -82,7 +95,7 @@ jobs:
             source .venv/bin/activate
 
             echo "::group::CLI health check"
-            deply --help
+            depsight --help
             echo "::endgroup::"
 
             echo "::group::Ruff linting"
