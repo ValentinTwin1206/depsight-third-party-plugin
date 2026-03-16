@@ -3,11 +3,16 @@ name: CI (DevContainer Build & Test)
 on:
   workflow_call:
     inputs:
-      release_tag:
-        description: "Git release tag to verify against pyproject.toml (e.g. 1.2.3)."
+      plugin_version:
+        description: "Plugin version to verify against pyproject.toml (e.g. 1.2.3)."
         required: false
         default: ""
         type: string
+      is_release:
+        description: "Whether this is a release build (uploads wheel to GH Release)."
+        required: false
+        default: false
+        type: boolean
       uv_version:
         description: "uv version for the Docker build"
         required: false
@@ -38,25 +43,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Verify release tag matches pyproject.toml
-        if: ${{ inputs.release_tag != '' }}
+      - name: Verify plugin version matches pyproject.toml
+        if: ${{ inputs.plugin_version != '' }}
         env:
-          TAG: ${{ inputs.release_tag }}
+          VERSION: ${{ inputs.plugin_version }}
         run: |
           set -euo pipefail
 
           echo "::group::Version check"
 
           toml_version=$(grep '^version' pyproject.toml | sed 's/version = "\(.*\)"/\1/')
-          echo "Parsed '$TAG' as Git tag"
+          echo "Parsed '$VERSION' as plugin version"
           echo "Parsed '$toml_version' from pyproject.toml"
 
-          if [[ "$TAG" != "$toml_version" ]]; then
-            echo "::error::Tag '$TAG' does not match pyproject.toml version '$toml_version'"
+          if [[ "$VERSION" != "$toml_version" ]]; then
+            echo "::error::Plugin version '$VERSION' does not match pyproject.toml version '$toml_version'"
             exit 1
           fi
 
-          echo "Tag and pyproject.toml version match ('$TAG')"
+          echo "Plugin version and pyproject.toml version match ('$VERSION')"
 
           echo "::endgroup::"
 
@@ -93,29 +98,36 @@ jobs:
             echo "::endgroup::"
 
             echo "::group::Build wheel"
-            uv build
+            # TODO: Run 'uv --help | grep wheel' in a terminal to check which command
+            # can be used to build your wheel. Use this command without any additional
+            # flags and replace this comment block with the actual command.
+ 
             ls -lah dist
             echo "::endgroup::"
 
-            echo "::group::Stage depsight wheel"
-            mkdir -p wheels
-            cp /opt/depsight-wheels/*.whl wheels/
-            ls -lah wheels
-            echo "::endgroup::"
-
       - name: Upload plugin wheel artifact
+        if: ${{ inputs.push_image }}
         uses: actions/upload-artifact@v4
         with:
           name: plugin-wheel
           path: dist/*.whl
           if-no-files-found: error
 
-      - name: Upload depsight wheel artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: depsight-wheel
-          path: wheels/*.whl
-          if-no-files-found: error
+      - name: Upload wheel to GitHub Release
+        if: ${{ inputs.is_release }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.plugin_version }}
+        run: |
+
+          set -euo pipefail
+
+          echo "::group::Upload wheel to GitHub Release"
+          # TODO: Upload the built wheel using 'gh release upload' with the following arguments:
+          #   - The dedicated release tag: $RELEASE_TAG
+          #   - The file glob pointing to the built wheel: dist/*.whl
+          #   - The '--clobber' flag so re-runs overwrite an existing asset
+          echo "::endgroup::"
 
   build_container:
     runs-on: ubuntu-latest
@@ -130,12 +142,6 @@ jobs:
           name: plugin-wheel
           path: dist/
 
-      - name: Download depsight wheel artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: depsight-wheel
-          path: wheels/
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -146,14 +152,14 @@ jobs:
           username: ${{ vars.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
 
-      - name: Build (and push) Docker image
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile
-          push: ${{ inputs.push_image == true }}
-          tags: |
-            ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:latest
-            ${{ vars.DOCKER_USER }}/${{ vars.DOCKER_REPO }}:uv${{ inputs.uv_version || '0.10.9' }}
-          build-args: |
-            UV_VERSION=${{ inputs.uv_version || '0.10.9' }}
+      # TODO: Build (and push) the Docker image
+      # Use the 'docker/build-push-action@v6' action.
+      # Configure it with:
+      #   context:    '.'           (the repo root as Docker build context)
+      #   file:       'Dockerfile'  (the top-level Dockerfile)
+      #   push:       only when inputs.push_image is true
+      #   tags:       two tags on the image:
+      #               1) <DOCKER_USER>/<DOCKER_REPO>:latest
+      #               2) <DOCKER_USER>/<DOCKER_REPO>:uv<UV_VERSION>
+      #               Use ${{ vars.DOCKER_USER }}, ${{ vars.DOCKER_REPO }},
+      #               and ${{ inputs.uv_version || '0.10.9' }}.

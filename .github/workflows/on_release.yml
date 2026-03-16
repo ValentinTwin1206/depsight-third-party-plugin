@@ -9,7 +9,8 @@ jobs:
     uses: ./.github/workflows/build.yml
     secrets: inherit
     with:
-      release_tag: ${{ github.event.release.tag_name }}
+      plugin_version: ${{ github.event.release.tag_name }}
+      is_release: true
       push_image: true
       uv_version: "0.10.9"
       depsight_version: "1.0.0"
