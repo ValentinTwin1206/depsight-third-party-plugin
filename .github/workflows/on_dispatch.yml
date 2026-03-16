@@ -32,3 +32,4 @@ jobs:
       depsight_version: ${{ inputs.depsight_version }}
       push_image: ${{ inputs.push_image }}
       plugin_version: ${{ inputs.plugin_version }}
+      is_release: false

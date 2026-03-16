@@ -6,27 +6,22 @@ on:
       plugin_version:
         description: "Plugin version to verify against pyproject.toml (e.g. 1.2.3)."
         required: false
-        default: ""
         type: string
       is_release:
         description: "Whether this is a release build (uploads wheel to GH Release)."
         required: false
-        default: false
         type: boolean
       uv_version:
         description: "uv version for the Docker build"
         required: false
-        default: "0.10.9"
         type: string
       depsight_version:
-        description: "Desight wheel version to install in the DevContainer"
+        description: "Depsight wheel version to install in the DevContainer"
         required: false
-        default: "1.0.0"
         type: string
       push_image:
         description: "Push the container image to Docker Hub"
         required: false
-        default: false
         type: boolean
 
 
