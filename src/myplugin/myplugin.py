@@ -20,12 +20,12 @@ class MyPlugin(BasePlugin):
 
     @property
     def dependency_files(self) -> tuple[str, ...]:
-        # TODO: Add "package.json"to the tuple
+        # TODO: Add "package-lock.json"to the tuple
         return ("")
 
     def collect(self, project_dir: str | Path) -> None:
         """Return two fake dependencies for testing."""
-        # TODO: TOTALLY REIMLPEMENT THIS METHOD TO PARSE A REAL NPM DEPENDENCIES
+        # TODO: TOTALLY REIMLPEMENT THIS METHOD TO PARSE REAL NPM DEPENDENCIES FROM A 'package-lock.json'
         self.dependencies = [
             Dependency(name="foo", version="1.0.0", tool_name=self.name),
             Dependency(name="bar", version="2.0.0", tool_name=self.name),
