@@ -13,4 +13,5 @@ jobs:
       is_release: true
       push_image: true
       uv_version: "0.10.9"
-      depsight_version: "1.0.0"
+      python_version: "3.12"
+      depsight_version: "latest"

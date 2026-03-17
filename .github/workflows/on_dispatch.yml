@@ -8,10 +8,15 @@ on:
         required: false
         default: "0.10.9"
         type: string
-      depsight_version:
-        description: "Depsight wheel version to install in the DevContainer"
+      python_version:
+        description: "uv version for the Docker build"
         required: false
-        default: "1.0.0"
+        default: "3.12"
+        type: string
+      depsight_version:
+        description: "Depsight wheel version to install in the DevContainer (defaults to 'latest')"
+        required: false
+        default: "latest"
         type: string
       push_image:
         description: "Push the container image to Docker Hub"
@@ -30,6 +35,7 @@ jobs:
     with:
       uv_version: ${{ inputs.uv_version }}
       depsight_version: ${{ inputs.depsight_version }}
+      python_version: ${{ inputs.python_version }}
       push_image: ${{ inputs.push_image }}
-      plugin_version: ${{ inputs.plugin_version }}
       is_release: false
+      plugin_version: ${{ inputs.plugin_version }}

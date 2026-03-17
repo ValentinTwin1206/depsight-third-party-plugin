@@ -13,6 +13,10 @@ ARG WHL_PKG=depsight-${DEPSIGHT_VERSION}-py3-none-any.whl
 ADD https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/download/${DEPSIGHT_VERSION}/${WHL_PKG} /opt/depsight-wheels/
 RUN chmod -R a+r /opt/depsight-wheels/
 
+# Grant the vscode user ownership of /workspaces so the postCreateCommand
+# can move files into it without hitting a permission denied error.
+RUN mkdir -p /workspaces && chown -R vscode:vscode /workspaces
+
 # Environment variables
 ENV DEPSIGHT_ENV=development
 ENV PYTHONUNBUFFERED=1
