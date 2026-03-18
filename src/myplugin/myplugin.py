@@ -20,12 +20,38 @@ class MyPlugin(BasePlugin):
 
     @property
     def dependency_files(self) -> tuple[str, ...]:
-        # TODO: Add "package.json"to the tuple
+        # TODO: Add "package-lock.json"to the tuple
         return ("")
 
     def collect(self, project_dir: str | Path) -> None:
         """Return two fake dependencies for testing."""
-        # TODO: TOTALLY REIMLPEMENT THIS METHOD TO PARSE A REAL NPM DEPENDENCIES
+        # TODO: Parse dependencies from a 'package-lock.json' file.
+        # Implementation guidance:
+        # - Locate and load the 'package-lock.json' from the given project directory.
+        # - Read the JSON content and detect the lockfile format version.
+
+        # For npm v2/v3 (preferred approach):
+        # - Use the top-level "packages" field.
+        # - Iterate over all entries in "packages".
+        # - Skip the root entry identified by an empty string key ("").
+        # - Only consider entries under "node_modules/...".
+        # - Extract the dependency name from the path:
+        #     e.g. "node_modules/lodash" → "lodash"
+        #          "node_modules/@scope/pkg" → "@scope/pkg"
+        # - Read the resolved version from the "version" field.
+        # - Create a Dependency(name, version, tool_name=self.name) for each entry.
+
+        # For npm v1 (fallback):
+        # - Use the nested "dependencies" field.
+        # - Recursively traverse all dependency objects.
+        # - Extract "name" (key) and "version" from each node.
+
+        # General rules:
+        # - Do NOT resolve versions manually; always use the locked version.
+        # - Skip entries without a valid "version".
+        # - Ensure each dependency is added only once (avoid duplicates).
+        # - Store results in self.dependencies.
+
         self.dependencies = [
             Dependency(name="foo", version="1.0.0", tool_name=self.name),
             Dependency(name="bar", version="2.0.0", tool_name=self.name),
