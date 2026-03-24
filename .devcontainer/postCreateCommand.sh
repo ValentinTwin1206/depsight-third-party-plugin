@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Copy depsight wheel into the local wheels/ directory and install all dependencies
-mkdir -p wheels
-cp /opt/depsight-wheels/*.whl wheels/
+# Ensure depsight is always resolved from PyPI at the latest version
 uv lock --upgrade-package depsight
+
+# Install all dependencies
 uv sync --all-groups
 
 # Clone the JS fullstack learning course repository

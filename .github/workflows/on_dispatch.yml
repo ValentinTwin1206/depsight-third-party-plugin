@@ -13,11 +13,6 @@ on:
         required: false
         default: "3.12"
         type: string
-      depsight_version:
-        description: "Depsight wheel version to install in the DevContainer (defaults to 'latest')"
-        required: false
-        default: "latest"
-        type: string
       push_image:
         description: "Push the container image to Docker Hub"
         required: false
@@ -34,7 +29,6 @@ jobs:
     secrets: inherit
     with:
       uv_version: ${{ inputs.uv_version }}
-      depsight_version: ${{ inputs.depsight_version }}
       python_version: ${{ inputs.python_version }}
       push_image: ${{ inputs.push_image }}
       is_release: false

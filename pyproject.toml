@@ -17,9 +17,6 @@ dependencies = [
 [project.entry-points."depsight.plugins"]
 myplugin = "myplugin.myplugin:MyPlugin" # TODO: REPLACE WITH "npm.npm:NPMPlugin"
 
-[tool.uv]
-find-links = ["wheels"]
-
 [dependency-groups]
 dev = [
     "pytest>=8.0",

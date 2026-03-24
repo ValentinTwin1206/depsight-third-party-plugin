@@ -25,15 +25,16 @@ wheels = [
 
 [[package]]
 name = "depsight"
-version = "0.1.0"
-source = { registry = "wheels" }
+version = "0.4.0"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "rich" },
     { name = "rich-click" },
 ]
+sdist = { url = "https://files.pythonhosted.org/packages/fb/5f/1d452d0fccfb65a81c1d62efe6578761ca24b0c56136c5a02a1fbf895e1e/depsight-0.4.0.tar.gz", hash = "sha256:63bdf27f8e21220b32153e2e68015d4c8c0d76c01d75c791209658d8165eefe9", size = 19198, upload-time = "2026-03-24T09:11:00.763Z" }
 wheels = [
-    { path = "depsight-0.1.0-py3-none-any.whl" },
+    { url = "https://files.pythonhosted.org/packages/bc/35/74d7166c5d88c1e8d8754c1e79015ba6d2b6f4f95cc69b6beea4c5c2ce63/depsight-0.4.0-py3-none-any.whl", hash = "sha256:34071c862e76e17850ff7024b91ee5115691bd98638579d3100d8d290888321d", size = 22464, upload-time = "2026-03-24T09:10:59.76Z" },
 ]
 
 [[package]]
