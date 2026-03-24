@@ -14,12 +14,7 @@ RUN apt-get update \
 
 WORKDIR /depsight
 
-# Install the 'depsight' wheel
-ARG DEPSIGHT_VERSION=0.3.0
-ARG WHL_PKG=depsight-${DEPSIGHT_VERSION}-py3-none-any.whl
-# TODO: Download the depsight wheel from the GitHub release into the 'wheels/' directory.
-#       Use the Docker ADD syntax with the release URL below:
-#         https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/download/${DEPSIGHT_VERSION}/${WHL_PKG}
+# depsight is installed automatically from PyPI via the dependency in pyproject.toml.
 
 # TODO: Copy pyproject.toml and uv.lock into the container.
 #       Copying them before the source code allows Docker to cache the

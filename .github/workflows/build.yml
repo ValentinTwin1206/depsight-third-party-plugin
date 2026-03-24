@@ -19,10 +19,6 @@ on:
         description: "Python version for the Docker build"
         required: true
         type: string
-      depsight_version:
-        description: "Depsight wheel version to install in the DevContainer ('latest' to auto-resolve)"
-        required: true
-        type: string
       push_image:
         description: "Push the container image to Docker Hub"
         required: true
@@ -30,38 +26,16 @@ on:
 
 
 env:
-  DEPSIGHT_VERSION: ${{ inputs.depsight_version }}
   PYTHON_VERSION: ${{ inputs.python_version }}
   UV_VERSION: ${{ inputs.uv_version }}
 
 jobs:
   build_wheel:
     runs-on: ubuntu-latest
-    outputs:
-      resolved_depsight_version: ${{ steps.resolve_depsight.outputs.version }}
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Resolve depsight version
-        id: resolve_depsight
-        run: |
-          set -euo pipefail
-          if [[ "$DEPSIGHT_VERSION" == "latest" ]]; then
-            RESOLVED=$(
-              curl -sf \
-                -H "Accept: application/vnd.github+json" \
-                https://api.github.com/repos/ValentinTwin1206/depsight-dependency-manager/releases/latest \
-              | jq -r '.tag_name'
-            )
-            echo "Resolved 'latest' to depsight version: $RESOLVED"
-          else
-            RESOLVED="$DEPSIGHT_VERSION"
-            echo "Using explicit depsight version: $RESOLVED"
-          fi
-          echo "version=$RESOLVED" >> "$GITHUB_OUTPUT"
-          echo "DEPSIGHT_VERSION=$RESOLVED" >> "$GITHUB_ENV"
 
       - name: Verify plugin version matches pyproject.toml
         if: ${{ inputs.plugin_version != '' }}
@@ -84,17 +58,6 @@ jobs:
           echo "Plugin version and pyproject.toml version match ('$VERSION')"
 
           echo "::endgroup::"
-
-      - name: Check depsight release availability
-        run: |
-          set -euo pipefail
-          URL="https://github.com/ValentinTwin1206/depsight-dependency-manager/releases/download/${DEPSIGHT_VERSION}/depsight-${DEPSIGHT_VERSION}-py3-none-any.whl"
-          echo "Checking availability of depsight wheel at: $URL"
-          if ! curl --silent --head --fail "$URL" > /dev/null; then
-            echo "::error::depsight release '${DEPSIGHT_VERSION}' is not available at $URL"
-            exit 1
-          fi
-          echo "depsight '${DEPSIGHT_VERSION}' is available."
 
       - name: Lint, test & build wheel
         uses: devcontainers/ci@v0.3
@@ -190,7 +153,6 @@ jobs:
       #   file:       'Dockerfile'  (the top-level Dockerfile)
       #   push:       only when inputs.push_image is true
       #   build-args:
-      #      DEPSIGHT_VERSION=<DEPSIGHT_VERSION (use: ${{ needs.build_wheel.outputs.resolved_depsight_version }})
       #      PYTHON_VERSION=<PYTHON_VERSION> (use: ${{ env.PYTHON_VERSION }})
       #      UV_VERSION=<UV_VERSION> (use: ${{ inputs.uv_version }})
       #   tags:       two tags on the image:
