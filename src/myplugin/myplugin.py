@@ -21,9 +21,14 @@ class MyPlugin(BasePlugin):
     @property
     def dependency_files(self) -> tuple[str, ...]:
         # TODO: Add "package-lock.json"to the tuple
-        return ("")
+        return ("",)
 
-    def collect(self, project_dir: str | Path) -> None:
+    @property
+    def default_file(self) -> str:
+        # TODO: Return "package-lock.json" once dependency_files is updated
+        return self.dependency_files[0]
+
+    def collect(self, project_dir: str | Path, file: str | None = None) -> None:
         """Return two fake dependencies for testing."""
         # TODO: Parse dependencies from a 'package-lock.json' file.
         # Implementation guidance:

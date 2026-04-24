@@ -6,7 +6,7 @@ on:
       uv_version:
         description: "uv version for the Docker build"
         required: false
-        default: "0.10.9"
+        default: "0.11.1"
         type: string
       python_version:
         description: "uv version for the Docker build"
