@@ -4,20 +4,27 @@ import csv
 from pathlib import Path
 
 # third-party imports
-from deply.core.plugins.base import BasePlugin
-from deply.core.plugins.dependency import Dependency
+from depsight.core.plugins.base import BasePlugin
 
-# TODO: REPLACE THE IMPORT STATEMENT To "npm.npm import NpmPlugin"
 from myplugin.myplugin import MyPlugin
 
 
 class TestCollect:
     """Verify collect() populates dependencies correctly."""
 
-    # TODO: REIMPLEMENT THE WHOLE TEST
+    def test_plugin_implements_base_plugin_contract(self):
+        plugin = MyPlugin()
+
+        assert isinstance(plugin, BasePlugin)
+        assert isinstance(plugin.default_file, str)
+        assert plugin.default_file.strip()
+        assert Path(plugin.default_file).name == plugin.default_file
+        assert plugin.default_file not in {".", ".."}
+        assert plugin.default_file in plugin.dependency_files
+
     def test_collect_dependency_details(self):
         plugin = MyPlugin()
-        plugin.collect("/nonexistent")
+        plugin.collect("/nonexistent", file=plugin.default_file)
         foo, bar = plugin.dependencies
         assert (foo.name, foo.version, foo.tool_name) == ("foo", "1.0.0", "myplugin")
         assert (bar.name, bar.version, bar.tool_name) == ("bar", "2.0.0", "myplugin")
@@ -26,10 +33,9 @@ class TestCollect:
 class TestExport:
     """Verify export() writes a valid CSV."""
 
-    # TODO: REIMPLEMENT THE WHOLE TEST
     def test_export_csv(self, tmp_path: Path):
         plugin = MyPlugin()
-        plugin.collect("/some/project")
+        plugin.collect("/some/project", file=plugin.default_file)
         csv_path = plugin.export("/some/project", tmp_path)
         assert csv_path.exists()
         assert csv_path.name == "myplugin_project.csv"

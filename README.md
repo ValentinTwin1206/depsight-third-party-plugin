@@ -70,7 +70,8 @@ Please read the [Depsight User Instructions](https://valentintwin1206.github.io/
 - Select the **Manual Dispatch** workflow from the left sidebar
 - Click **Run workflow**
 - Set `plugin_version` to the version string to verify against `pyproject.toml` (e.g. `1.2.3`) — this field is **required**
-- Optionally set `uv_version` (defaults to `0.10.9`), `depsight_version` (defaults to `1.0.0`), or check **Push the container image to Docker Hub**
+- Optionally set `uv_version` (defaults to `0.11.1`) or check **Push the container image to Docker Hub**
+- The plugin currently pins `depsight==1.3.0` in `pyproject.toml`
 - Click **Run workflow**
 
 #### Release
