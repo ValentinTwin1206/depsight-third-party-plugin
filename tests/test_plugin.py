@@ -16,6 +16,10 @@ class TestCollect:
         plugin = MyPlugin()
 
         assert isinstance(plugin, BasePlugin)
+        assert isinstance(plugin.default_file, str)
+        assert plugin.default_file.strip()
+        assert Path(plugin.default_file).name == plugin.default_file
+        assert plugin.default_file not in {".", ".."}
         assert plugin.default_file in plugin.dependency_files
 
     def test_collect_dependency_details(self):
