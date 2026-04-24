@@ -28,7 +28,7 @@ class MyPlugin(BasePlugin):
         # TODO: Return "package-lock.json" once dependency_files is updated
         return self.dependency_files[0]
 
-    def collect(self, project_dir: str | Path, file: str | None = None) -> None:
+    def collect(self, project_dir: str | Path, _file: str | None = None) -> None:
         """Return two fake dependencies for testing."""
         # TODO: Parse dependencies from a 'package-lock.json' file.
         # Implementation guidance:
