@@ -8,7 +8,7 @@ The project is designed as a **hands-on DevOps learning exercise**. Rather than 
 
 ## Usage
 
-Please read the [Depsight User Instructions](https://valentintwin1206.github.io/depsight-dependency-manager/instructions/getting-started/getting-started/).
+Please read the [Depsight User Instructions](https://valentintwin1206.github.io/depsight-third-party-plugin/).
 
 ## Development
 
